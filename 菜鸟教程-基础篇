@@ -1,0 +1,65 @@
+SELECT - 从数据库中提取数据
+UPDATE - 更新数据库中的数据
+DELETE - 从数据库中删除数据
+INSERT INTO - 向数据库中插入新数据
+CREATE DATABASE - 创建新数据库
+ALTER DATABASE - 修改数据库
+CREATE TABLE - 创建新表
+ALTER TABLE - 变更（改变）数据库表
+DROP TABLE - 删除表
+CREATE INDEX - 创建索引（搜索键）
+DROP INDEX - 删除索引
+
+1.SELECT
+SELECT 字段1,字段2 FROM 表; //查询表中的字段1字段2的数据 
+SELECT * from 表//查询表中的所有字段的数据
+
+2.select distinct  //DISTINCT关键词用于返回唯一不同的值
+SELECT DISTINCT 字段1,字段2 FROM table_name; //查询字段1和字段2中各自不重复的值
+
+3.WHERE 子句用于过滤记录。
+SELECT * FROM 表 WHERE 字段1='CN';  //这里的意思是，查询表中，字段1里数据等于CN的信息条（0-N条，如果等于就查到），这里的字段文字用‘’ ，数字不用直接ID=1；这种形式
+=	等于
+<>	不等于。注释：在 SQL 的一些版本中，该操作符可被写成 !=
+>	大于
+<	小于
+>=	大于等于
+<=	小于等于
+BETWEEN	在某个范围内
+LIKE	搜索某种模式
+IN	指定针对某个列的多个可能值
+
+4.AND&OR
+SELECT * FROM Websites
+WHERE alexa > 15
+AND (country='CN' OR country='USA');//用括号括起来  优先级:非>与>或
+
+5.orderby 关键字用于对结果集进行排序。
+SELECT column_name,column_name
+FROM table_name
+ORDER BY column_name,column_name ASC|DESC; //这里是根据两个字段查询排序，全部就用select *from 
+默认：升序
+asc：指定列按升序排列
+desc：指定列按降序排列
+假设：
+order by 列名A,列名B           则默认列A和列B均按升序排列
+order by 列名A desc,列名B     A列降序，B列升序排列
+order by 列名A,列名B desc    A列升序，B列降序排列
+
+6.INSERT INTO 语句用于向表中插入新记录。
+INSERT INTO table_name (column1, column2, column3, ...)
+VALUES (value1, value2, value3, ...); //第一个表单没有指定要插入数据的列的名称，只提供要插入的值，即可添加一行新的数据
+
+INSERT INTO table_name
+VALUES (value1, value2, value3, ...);//第二种，如果要为表中的所有列添加值，则不需要在SQL查询中指定列名称。但是，请确保值的顺序与表中的列顺序相同。
+
+7.UPDATE 语句用于更新表中的记录。 
+UPDATE table_name
+SET column1=value1,column2=value2,...
+WHERE some_column=some_value; //这里where很重要，不写将会改变所有列的值，比如where id=1；你学费了吗？
+
+8.DELETE 语句用于删除表中的行。
+DELETE FROM table_name
+WHERE some_column=some_value;//这里where很重要，不写将会删除所有列
+DELETE * FROM table_name;//删除表中所有数据
+
