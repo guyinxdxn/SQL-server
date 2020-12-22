@@ -1,1 +1,61 @@
 1.SELECT TOP 子句用于规定要返回的记录的数目。
+SELECT TOP 50 PERCENT * FROM Websites; //查询websites表的前50%的数据
+
+2.LIKE 操作符用于在 WHERE 子句中搜索列中的指定模式。
+SELECT column_name(s)
+FROM table_name
+WHERE column_name LIKE pattern;
+例：SELECT * FROM Websites
+WHERE name LIKE '%k';//查询websitese表中名字亿k结尾的数据
+例:SELECT * FROM Websites
+WHERE name NOT LIKE '%oo%'; //NOT关键字，可选取不匹配的模式记录
+
+3.在 SQL 中，通配符与 SQL LIKE 操作符一起使用。SQL 通配符用于搜索表中的数据。
+通配符	描述
+%	替代 0 个或多个字符
+_	替代一个字符
+[charlist]	字符列中的任何单一字符
+[^charlist]
+或
+[!charlist]	不在字符列中的任何单一字符
+
+MySQL 中使用 REGEXP 或 NOT REGEXP 运算符 (或 RLIKE 和 NOT RLIKE) 来操作正则表达式。
+下面的 SQL 语句选取 name 以 "G"、"F" 或 "s" 开始的所有网站：
+实例
+SELECT * FROM Websites
+WHERE name REGEXP '^[GFs]'; // '^[^A-H]' 不以A-H开头的数据
+
+4.IN 操作符允许您在 WHERE 子句中规定多个值。
+语法：SELECT column_name(s)
+FROM table_name
+WHERE column_name IN (value1,value2,...);
+知识点:IN 与 = 的异同
+ 相同点：均在WHERE中使用作为筛选条件之一、均是等于的含义
+ 不同点：IN可以规定多个值，等于规定一个值
+ 知识点2:in 与 = 的转换
+select * from Websites where name in ('Google','菜鸟教程');
+可以转换成 = 的表达：
+select * from Websites where name='Google' or name='菜鸟教程';
+
+5.BETWEEN 操作符选取介于两个值之间的数据范围内的值。这些值可以是数值、文本或者日期。
+语法：SELECT column_name(s)
+FROM table_name
+WHERE column_name BETWEEN value1 AND value2;
+例1：SELECT * FROM Websites
+WHERE alexa BETWEEN 1 AND 20;//查询websites表中啊；alexa列等于1-20的数据
+例2：SELECT * FROM Websites
+WHERE alexa NOT BETWEEN 1 AND 20;//NOT 同样可以使用
+例3：SELECT * FROM Websites
+WHERE (alexa BETWEEN 1 AND 20)
+AND country NOT IN ('USA', 'IND');//选取 alexa 介于 1 和 20 之间但 country 不为 USA 和 IND 的数据，字符串，时间用‘’
+
+6.SQL 别名，通过使用 SQL，可以为表名称或列名称指定别名。基本上，创建别名是为了让列名称的可读性更强。
+语法：SELECT column_name AS alias_name
+FROM table_name;//
+例：SELECT name AS n, country AS c
+FROM Websites; //设置websites表中的name字段的别名为n，country字段的别名为c
+例2:SELECT name, CONCAT(url, ', ', alexa, ', ', country) AS site_info
+FROM Websites; // 我们把三个列（url、alexa 和 country）结合在一起，并创建一个名为 "site_info" 的别名
+例3:SELECT w.name, w.url, a.count, a.date
+FROM Websites AS w, access_log AS a
+WHERE a.site_id=w.id and w.name="菜鸟教程";  //貌似是链表查询。
